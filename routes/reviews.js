@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router({mergeParams: true});
 
+const ExpressError = require('../utilities/expressError');
 const Campground = require('../models/campground');
 const Review = require('../models/review.js');
 
@@ -12,7 +13,7 @@ const validateReview = (req, res, next) => {
     const { error } = reviewSchema.validate(req.body);
     if (res.error) {
         const msg = error.details.map(el => el.message).join(',')
-        throw new ExpressErorr(msg, 400)
+        throw new ExpressError(msg, 400)
     } else {
         next()
     }
