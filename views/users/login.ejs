@@ -1,13 +1,25 @@
 <% layout('layouts/boilerplate') %>
-<h1>Log In</h1>
-<form class="validated-form" action="/login" method="POST" novalidate>
-    <div class="mb-3">
-        <label class="form-label" for="username">Username</label>
-        <input class="form-control" type="text" id="username" name="username" required>
+
+<div class="container justify-content-center align-items-center mt-5">
+    <div class="row">
+        <div class="col-md-6 offset-md-3 col-xl-3 offset-xl-4">
+            <div class="card shadow">
+                <img class="card-img-top" src="https://res.cloudinary.com/dskorlytk/image/upload/v1733530905/YelpCamp/epia07q5am4cgwoveicv.jpg" alt="Dimly lit forest with light shining through trees">
+                <div class="card-body">
+                    <h5 class="card-title">Login</h5>
+                    <form class="validated-form" action="/login" method="POST" novalidate>
+                        <div class="mb-3">
+                            <label class="form-label" for="username">Username</label>
+                            <input class="form-control" type="text" id="username" name="username" autofocus required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="password">Password</label>
+                            <input class="form-control" type="password" id="password" name="password" required>
+                        </div>
+                        <button class="btn btn-success">Log In</button>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="mb-3">
-        <label class="form-label" for="password">Password</label>
-        <input class="form-control" type="password" id="password" name="password" required>
-    </div>
-    <button class="btn btn-success">Log In</button>
-</form>
+</div>
