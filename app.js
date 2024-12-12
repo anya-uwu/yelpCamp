@@ -19,11 +19,15 @@ const helmet = require('helmet');
 const userRoutes = require('./routes/users.js');
 const campgroundRoutes = require('./routes/campgrounds.js');
 const reviewRoutes = require('./routes/reviews.js');
-// const dbUrl = process.env.DB_URL;
 
+const MongoStore = require('connect-mongo');
+
+const dbUrl = process.env.DB_URL || 'mongodb://localhost:27017/yelp-camp';
+
+// process.env.DB_URL
 // 'mongodb://localhost:27017/yelp-camp'
 
-mongoose.connect('mongodb://localhost:27017/yelp-camp');
+mongoose.connect(dbUrl);
 
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
@@ -44,9 +48,24 @@ app.use(mongoSanitize({
     replaceWith: '_'
 }))
 
+const secret = process.env.SECRET || 'thisshouldbeabettersecret'
+
+const store = MongoStore.create({
+    mongoUrl: dbUrl,
+    touchAfter: 24 * 60 * 60,
+    crypto: {
+        secret
+    }
+});
+
+store.on('error', function (e) {
+    console.log('session store error', e)
+})
+
 const sessionConfig = {
+    store,
     name: 'session',
-    secret: 'thisshouldbeabettersecret',
+    secret,
     resave: false,
     saveUninitialized: true,
     cookie: {
